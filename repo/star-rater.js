@@ -6,13 +6,10 @@ var StarRater = React.createClass({
         for (var i=0; i<5; i++){
             
             var className;
-            console.log(this.props)
             if(i < this.props.rating || 0){
-                console.log('passing rating')
                 className = 'fa fa-star';
             }
             else {
-                console.log('fafa 0')
                 className='fa fa-star-o';
             }
             var star=(

@@ -10,9 +10,11 @@ var GuessCount= require('./guessCount');
 var Game= function(props){
     return (
         <div className='game'>
-            <h2><Feedback 
-                currentFeedback={props.currentFeedback} 
-            /></h2>
+            <h2>
+                <Feedback 
+                    currentFeedback={props.currentFeedback} 
+                />
+            </h2>
             {props.randomNumber}
             <GuessInput 
                 randomNumber={props.randomNumber} 
@@ -23,8 +25,8 @@ var Game= function(props){
             <GuessList guess={props.guess} />
             <NewGameButton isActive={props.isActive}/>
 
-        </div>)
-        ;
+        </div>
+        );
 }
 var mapStateToProps = function(state, props) {
     return {

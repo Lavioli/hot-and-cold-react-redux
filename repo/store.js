@@ -1,12 +1,18 @@
 var redux = require('redux');
 var createStore=redux.createStore;
 var actions= require('./actions_repo');
-var repositoryReducer= require('./reducers_repo').repositoryReducer;
-var store=createStore(repositoryReducer);
+var Reducer= require('./reducers_repo');
+var applyMiddleware = redux.applyMiddleware;
+var thunk = require('redux-thunk').default;
+var store=createStore(Reducer.repositoryReducer, applyMiddleware(thunk));
+
+
 
 // store.dispatch(actions.addRepository('dd'));
-// store.dispatch(actions.rateRepository('dd',3));
-// store.dispatch(actions.addRepository('erty'));
-// store.getState();
+
+// store.dispatch(actions.fetchDescriptionSuccess('dd','this is the one'));
+//  store.dispatch(actions.fetchDescriptionError('dd'));
+
+// console.log(store.getState());
 
 module.exports = store;

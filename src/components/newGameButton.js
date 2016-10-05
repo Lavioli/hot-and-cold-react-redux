@@ -17,7 +17,6 @@ var NewGameButton = React.createClass({
             )
         } else {
             return (
-                
                 <div></div>
             )
         }

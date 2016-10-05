@@ -50,31 +50,17 @@
 	var ReactDOM = __webpack_require__(34);
 	var createStore = __webpack_require__(172).createStore;
 	var Provider = __webpack_require__(186).Provider;
+	
 	var gameReducers = __webpack_require__(199).gameReducer;
+	
 	var store = createStore(gameReducers);
 	var Game = __webpack_require__(201);
-	console.log(store.getState);
+	
 	ReactDOM.render(React.createElement(
-	                Provider,
-	                { store: store },
-	                React.createElement(Game, null)
+	    Provider,
+	    { store: store },
+	    React.createElement(Game, null)
 	), document.getElementById('app'));
-	
-	// var React = require('react');
-	// var ReactDOM = require('react-dom');
-	// var Provider = require('react-redux').Provider;
-	
-	// var store = require('./src/components/app');
-	// // var RepositoryList = require('./src');
-	
-	// document.addEventListener('DOMContentLoaded', function() {
-	//     ReactDOM.render(
-	//         <Provider store={store}>
-	//             <>
-	//         </Provider>,
-	//         document.getElementById('app')
-	//     );
-	// });
 
 /***/ },
 /* 1 */
@@ -23223,7 +23209,6 @@
 	        case IS_ACTIVE:
 	            if (state.currentFeedback === "Congrats, you got it!") {
 	                console.log('isactive should be false');
-	
 	                var newState = Object.assign({}, state, { isActive: false });
 	            } else {
 	                var newState = Object.assign({}, state, { isActive: true });
@@ -23356,8 +23341,8 @@
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(186).connect;
 	var NewGameButton = __webpack_require__(202);
-	var GuessInput = __webpack_require__(204);
-	var Feedback = __webpack_require__(203);
+	var GuessInput = __webpack_require__(203);
+	var Feedback = __webpack_require__(204);
 	var GuessList = __webpack_require__(205);
 	var GuessCount = __webpack_require__(206);
 	
@@ -23459,46 +23444,12 @@
 	'use strict';
 	
 	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(34);
-	var connect = __webpack_require__(186).connect;
-	
-	var Feedback = React.createClass({
-		displayName: 'Feedback',
-	
-	
-		render: function render(props) {
-			console.log(this.props);
-			return React.createElement(
-				'div',
-				{ className: 'feedback' },
-				this.props.currentFeedback
-			);
-		}
-	});
-	
-	module.exports = Feedback;
-
-/***/ },
-/* 204 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
 	var connect = __webpack_require__(186).connect;
 	var actions = __webpack_require__(200);
-	var Feedback = __webpack_require__(203);
+	var Feedback = __webpack_require__(204);
 	
 	var GuessInput = React.createClass({
 	    displayName: 'GuessInput',
-	
-	    // getInitialState: function() {
-	    //     return {
-	    //         guess: 0,
-	    //         currentFeedback:'Make A Guess'
-	    //     }
-	
-	    // },
 	
 	    addGuess: function addGuess(event) {
 	        event.preventDefault();
@@ -23515,6 +23466,7 @@
 	    },
 	
 	    render: function render(props) {
+	        // console.log(this.props)
 	        if (this.props.isActive === true) {
 	            return React.createElement(
 	                'div',
@@ -23555,15 +23507,37 @@
 	
 	// var mapStateToProps = function(state, props) {
 	//     return {
-	//         randomNumber: state.randomNumber,
-	//         guess: state.guess,
-	//         currentFeedback: state.currentFeedback
+	//         randomNumber: state.randomNumber
 	//     }
-	// } 
+	// }
 	
 	var Container = connect()(GuessInput);
-	
 	module.exports = Container;
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(34);
+	var connect = __webpack_require__(186).connect;
+	
+	var Feedback = React.createClass({
+		displayName: 'Feedback',
+	
+	
+		render: function render(props) {
+			return React.createElement(
+				'div',
+				{ className: 'feedback' },
+				this.props.currentFeedback
+			);
+		}
+	});
+	
+	module.exports = Feedback;
 
 /***/ },
 /* 205 */
@@ -23607,7 +23581,6 @@
 	var actions = __webpack_require__(200);
 	
 	var GuessCount = function GuessCount(props) {
-	    console.log(props);
 	    return React.createElement(
 	        'div',
 	        { id: 'guessCount', className: 'guessCount' },

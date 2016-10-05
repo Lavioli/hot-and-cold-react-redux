@@ -55,7 +55,6 @@ var gameReducer = function (state, action) {
         case IS_ACTIVE:
               if(state.currentFeedback=== "Congrats, you got it!"){
                 console.log('isactive should be false');
-                
                 var newState=Object.assign({},state,{isActive:false});  
             }
             else{
