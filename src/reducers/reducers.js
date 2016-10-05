@@ -5,13 +5,17 @@ var CURRENT_FEEDBACK=actions.CURRENT_FEEDBACK;
 var GUESS_NUMBER=actions.GUESS_NUMBER; 
 var NEW_GAME=actions.NEW_GAME;
 var COUNT=actions.COUNT;
+var FETCH_FEWEST_GUESSES_SUCCESS=actions.FETCH_FEWEST_GUESSES_SUCCESS;
+var FETCH_FEWEST_GUESSES_ERROR=actions.FETCH_FEWEST_GUESSES_ERROR;
+
+var FETCH_SUBMIT=actions.FETCH_SUBMIT;
 
 var InitialGameState = {
                             guess: [],    
                             isActive:true,
-                            currentFeedback:' Make a guess',
+                            currentFeedback:'Make a guess',
                             randomNumber:(Math.floor(Math.random()*100)+1),
-                            count: 0
+                            count: 0,
                             };
                             
 var gameReducer = function (state, action) {
@@ -42,7 +46,11 @@ var gameReducer = function (state, action) {
             var newGuess=state.guess.concat(action.payload);
             var isActive=state.isActive;
             if (feedback=== "Congrats, you got it!") {
+               
                isActive = false; 
+               
+               
+               
             }
             var newState=Object.assign({},state, {guess:newGuess, currentFeedback:feedback, isActive: isActive});
             return newState;
@@ -71,9 +79,29 @@ var gameReducer = function (state, action) {
             var guessCount = state.guess.length;
             var newState= Object.assign({},state, {count: guessCount});
             return newState;
-        default: 
-            return state;
+       
             
+        case FETCH_FEWEST_GUESSES_SUCCESS:
+            //if state.count === actions.payload
+            if(state.currentFeedback=== "Congrats, you got it!"){
+               if(state.count < actions.payload || actions.payload === 0 ) {
+                   //update lowestCount
+                   var newLowestCount = state.count;
+                   var newState = Object.assign({},state, {lowestCount: newLowestCount});
+                   //DO POST REQUEST TO UPDATE HERE, should be able to update database with state.lowestCount
+                return newState; 
+               }
+                 
+            }
+            return state;
+        case FETCH_FEWEST_GUESSES_ERROR:
+            throw new Error('Cannot find lowest guess count');
+        
+        case FETCH_SUBMIT:
+            console.log('submit')
+        
+         default: 
+            return state;
     }
 }
 

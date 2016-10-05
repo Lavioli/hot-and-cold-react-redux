@@ -11,6 +11,7 @@ var GuessInput= React.createClass({
         this.refs.number.value ='';
         var number = this.props.guess.length
         this.props.dispatch(actions.count(number));
+        this.props.dispatch(actions.fetchSubmit());
     }, 
     
     

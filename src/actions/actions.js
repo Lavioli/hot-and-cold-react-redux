@@ -5,7 +5,7 @@
 //displays if hot or cold(feedback)
 //list of old guesses (Array)
 
-
+var fetch =require('isomorphic-fetch');
 var GUESS_NUMBER="GUESS";
 var makeAGuess= function(guess){
     console.log('makeAGuess called', guess)
@@ -53,6 +53,52 @@ var count = function(number) {
     }
 }
 
+var FETCH_SUBMIT = FETCH_SUBMIT;
+var fetchSubmit = function() {
+    var url='http://redux-michellen.c9users.io/fewest-guesses';
+        fetch(url).then(function(res){
+            console.log(res)
+        })
+    }
+
+var FETCH_FEWEST_GUESSES = FETCH_FEWEST_GUESSES;
+var fetchFewestGuesses= function(){
+    var url='http://redux-michellen.c9users.io/fewest-guesses';
+    return function(dispatch){
+        
+        fetch(url).then(function(res){
+            if (res.status < 200 || res.status >= 300) {
+                var error = new Error(res.statusText)
+                error.res = res
+                throw error;
+            }
+            return res;
+        }).then(function(res){
+            return res.json();
+        }).then(function(data){
+            var lowestNumber= data.lowestNumber;
+            return dispatch(fetchFewestGuessesSuccess(lowestNumber))
+        }).catch(function(error){
+            return dispatch(fetchFewestGuessesError(error));
+        });
+    }
+}
+
+var FETCH_FEWEST_GUESSES_SUCCESS= 'FETCH_FEWEST_GUESSES_SUCCESS';
+var fetchFewestGuessesSuccess= function(currentCount){
+    return{
+     type: FETCH_FEWEST_GUESSES_SUCCESS,
+     payload: currentCount
+    }
+}
+var FETCH_FEWEST_GUESSES_ERROR= 'FETCH_FEWEST_GUESSES_ERROR';
+var fetchFewestGuessesError= function(error){
+    return{
+     type: FETCH_FEWEST_GUESSES_ERROR,
+     payload: error
+    }
+}
+
 exports.GUESS_NUMBER=GUESS_NUMBER;
 exports.makeAGuess=makeAGuess;
 exports.RANDOM_NUMBER=RANDOM_NUMBER;
@@ -65,3 +111,12 @@ exports.NEW_GAME=NEW_GAME;
 exports.newGame=newGame;
 exports.COUNT=COUNT;
 exports.count=count;
+
+exports.FETCH_FEWEST_GUESSES_ERROR=FETCH_FEWEST_GUESSES_ERROR;
+exports.fetchFewestGuessesError=fetchFewestGuessesError;
+exports.FETCH_FEWEST_GUESSES_SUCCESS=FETCH_FEWEST_GUESSES_SUCCESS;
+exports.fetchFewestGuessesSuccess=fetchFewestGuessesSuccess;
+exports.fetchFewestGuesses=fetchFewestGuesses;
+
+exports.FETCH_SUBMIT=FETCH_SUBMIT;
+exports.fetchSubmit=fetchSubmit;
